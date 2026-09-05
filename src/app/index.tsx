@@ -1,98 +1,168 @@
-import * as Device from 'expo-device';
-import { Platform, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-
-import { AnimatedIcon } from '@/components/animated-icon';
-import { HintRow } from '@/components/hint-row';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { WebBadge } from '@/components/web-badge';
-import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
-
-function getDevMenuHint() {
-  if (Platform.OS === 'web') {
-    return <ThemedText type="small">use browser devtools</ThemedText>;
-  }
-  if (Device.isDevice) {
-    return (
-      <ThemedText type="small">
-        shake device or press <ThemedText type="code">m</ThemedText> in terminal
-      </ThemedText>
-    );
-  }
-  const shortcut = Platform.OS === 'android' ? 'cmd+m (or ctrl+m)' : 'cmd+d';
-  return (
-    <ThemedText type="small">
-      press <ThemedText type="code">{shortcut}</ThemedText>
-    </ThemedText>
-  );
-}
+import { router } from 'expo-router';
+import { ImageBackground, Pressable, StyleSheet, Text, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function HomeScreen() {
+  const insets = useSafeAreaInsets();
+
   return (
-    <ThemedView style={styles.container}>
-      <SafeAreaView style={styles.safeArea}>
-        <ThemedView style={styles.heroSection}>
-          <AnimatedIcon />
-          <ThemedText type="title" style={styles.title}>
-            Welcome to&nbsp;Expo
-          </ThemedText>
-        </ThemedView>
+    <ImageBackground
+      source={{
+        uri: 'https://images.pexels.com/photos/1552242/pexels-photo-1552242.jpeg?auto=compress&cs=tinysrgb&w=1200',
+      }}
+      resizeMode="cover"
+      style={styles.background}>
+      <View style={styles.imageTint} />
+      <View style={styles.bottomShade} />
 
-        <ThemedText type="code" style={styles.code}>
-          get started
-        </ThemedText>
+      <View style={[styles.content, { paddingTop: insets.top + 24, paddingBottom: insets.bottom + 28 }]}>
+        <View style={styles.brandMark}>
+          <Text style={styles.brandMarkText}>AF</Text>
+        </View>
 
-        <ThemedView type="backgroundElement" style={styles.stepContainer}>
-          <HintRow
-            title="Try editing"
-            hint={<ThemedText type="code">src/app/index.tsx</ThemedText>}
-          />
-          <HintRow title="Dev tools" hint={getDevMenuHint()} />
-          <HintRow
-            title="Fresh start"
-            hint={<ThemedText type="code">npm run reset-project</ThemedText>}
-          />
-        </ThemedView>
+        <View style={styles.bottomContent}>
+          <Text style={styles.welcome}>Welcome to</Text>
+          <Text style={styles.branding}>
+            <Text style={styles.brandingLight}>Alpha</Text>
+            <Text style={styles.brandingAccent}>Fit</Text>
+          </Text>
+          <Text style={styles.subtitle}>Your AI-powered fitness companion</Text>
 
-        {Platform.OS === 'web' && <WebBadge />}
-      </SafeAreaView>
-    </ThemedView>
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel="Get started"
+            onPress={() => router.push('/get-started')}
+            style={({ pressed }) => [styles.primaryButton, pressed && styles.buttonPressed]}>
+            <Text style={styles.primaryButtonText}>Get Started</Text>
+          </Pressable>
+
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel="Sign in"
+            onPress={() => router.push('/sign-in')}
+            style={({ pressed }) => [styles.signIn, pressed && styles.buttonPressed]}>
+            <Text style={styles.signInText}>Already have an account? </Text>
+            <Text style={styles.signInAccent}>Sign in</Text>
+          </Pressable>
+
+          <View accessibilityLabel="Onboarding step 1 of 3" style={styles.indicators}>
+            <View style={[styles.indicator, styles.activeIndicator]} />
+            <View style={styles.indicator} />
+            <View style={styles.indicator} />
+          </View>
+        </View>
+      </View>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  background: {
     flex: 1,
-    justifyContent: 'center',
-    flexDirection: 'row',
+    backgroundColor: '#07100c',
   },
-  safeArea: {
+  imageTint: {
+    ...StyleSheet.absoluteFill,
+    backgroundColor: 'rgba(4, 12, 8, 0.36)',
+  },
+  bottomShade: {
+    ...StyleSheet.absoluteFill,
+    backgroundColor: 'rgba(2, 7, 5, 0.35)',
+    opacity: 0.95,
+  },
+  content: {
     flex: 1,
-    paddingHorizontal: Spacing.four,
+    justifyContent: 'space-between',
+    paddingHorizontal: 28,
+  },
+  brandMark: {
     alignItems: 'center',
-    gap: Spacing.three,
-    paddingBottom: BottomTabInset + Spacing.three,
-    maxWidth: MaxContentWidth,
-  },
-  heroSection: {
-    alignItems: 'center',
     justifyContent: 'center',
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    gap: Spacing.four,
+    width: 46,
+    height: 46,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.5)',
+    borderRadius: 14,
   },
-  title: {
-    textAlign: 'center',
+  brandMarkText: {
+    color: '#b7f34a',
+    fontSize: 16,
+    fontWeight: '800',
+    letterSpacing: 1,
   },
-  code: {
-    textTransform: 'uppercase',
+  bottomContent: {
+    alignItems: 'center',
   },
-  stepContainer: {
-    gap: Spacing.three,
+  welcome: {
+    color: 'rgba(255, 255, 255, 0.78)',
+    fontSize: 18,
+    fontWeight: '500',
+    letterSpacing: 0.4,
+  },
+  branding: {
+    marginTop: 2,
+    fontSize: 56,
+    fontWeight: '800',
+    letterSpacing: -1.5,
+  },
+  brandingLight: {
+    color: '#ffffff',
+  },
+  brandingAccent: {
+    color: '#b7f34a',
+  },
+  subtitle: {
+    color: 'rgba(255, 255, 255, 0.72)',
+    fontSize: 15,
+    letterSpacing: 0.2,
+    marginTop: 8,
+  },
+  primaryButton: {
+    alignItems: 'center',
     alignSelf: 'stretch',
-    paddingHorizontal: Spacing.three,
-    paddingVertical: Spacing.four,
-    borderRadius: Spacing.four,
+    backgroundColor: '#b7f34a',
+    borderRadius: 18,
+    marginTop: 30,
+    minHeight: 58,
+    justifyContent: 'center',
+  },
+  primaryButtonText: {
+    color: '#101b0c',
+    fontSize: 16,
+    fontWeight: '800',
+    letterSpacing: 0.2,
+  },
+  signIn: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: 20,
+    paddingVertical: 8,
+  },
+  signInText: {
+    color: 'rgba(255, 255, 255, 0.68)',
+    fontSize: 14,
+  },
+  signInAccent: {
+    color: '#b7f34a',
+    fontSize: 14,
+    fontWeight: '700',
+  },
+  indicators: {
+    flexDirection: 'row',
+    gap: 7,
+    marginTop: 30,
+  },
+  indicator: {
+    backgroundColor: 'rgba(255, 255, 255, 0.42)',
+    borderRadius: 4,
+    height: 7,
+    width: 7,
+  },
+  activeIndicator: {
+    backgroundColor: '#b7f34a',
+    width: 24,
+  },
+  buttonPressed: {
+    opacity: 0.78,
   },
 });

@@ -1,56 +1,122 @@
-# Welcome to your Expo app 👋
+# AlphaFit - AI-Powered Personal Fitness & Nutrition Assistant
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+AlphaFit is a Final Year Project (FYP) frontend for an AI-powered personal fitness and nutrition assistant. The current repository contains the completed welcome and onboarding experience built with React Native and Expo.
 
-## Get started
+## Current Status
 
-1. Install dependencies
+The current frontend includes:
 
-   ```bash
-   npm install
-   ```
+- Welcome screen and onboarding entry point
+- Seven-step onboarding flow for profile information
+- Typed onboarding state with step validation and inline errors
+- Back navigation with entered values preserved while the flow is mounted
+- Single-select and multi-select options
+- Progress indicator and review summary
+- Loading state and accessible controls
+- Placeholder home destination after onboarding completion
 
-2. Start the app
+Onboarding data is currently held in temporary in-memory React state. It is not persisted when the flow is unmounted or restarted.
 
-   ```bash
-   npx expo start
-   ```
+Backend and platform integrations are not connected yet. This repository does not currently implement Supabase, authentication, Zustand, persistent storage, ML APIs, or an AI Coach.
 
-In the output, you'll find options to open the app in a
+## Technology Stack
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+- React Native 0.86
+- Expo SDK 57
+- Expo Router
+- TypeScript
+- React 19
+- React Native Web
+- Metro Bundler
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## Screens and Routes
 
-## Get a fresh project
+| Route | Current purpose |
+| --- | --- |
+| `/` | Welcome screen and onboarding entry point |
+| `/get-started` | Seven-step onboarding flow |
+| `/sign-in` | Existing sign-in route placeholder |
+| `/home` | Minimal placeholder destination after onboarding |
 
-When you're ready, run:
+## Onboarding Flow
 
-```bash
-npm run reset-project
+1. Basic information
+2. Body metrics
+3. Fitness goal
+4. Fitness level
+5. Workout preferences
+6. Workout frequency
+7. Review and finish
+
+Finishing the review performs local profile handling and navigates to `/home`. It does not currently save data to Supabase or another database.
+
+## Project Structure
+
+```text
+src/
+  app/             Expo Router screens and layout
+  components/      Reusable UI and onboarding components
+  constants/       Theme constants
+  hooks/           Color scheme and theme hooks
+  services/        Current local profile service boundary
+  types/           TypeScript onboarding types and labels
+  utils/           Onboarding validation helpers
+assets/            App icons, splash assets, and images
+scripts/           Project maintenance scripts
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Setup
 
-### Other setup steps
+Use Node.js 22.13 or newer for Expo SDK 57.
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+Install dependencies:
 
-## Learn more
+```bash
+npm install
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+Start the Expo development server:
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+```bash
+npx expo start
+```
 
-## Join the community
+### Expo Go
 
-Join our community of developers creating universal apps.
+With the development server running, install Expo Go on a compatible device, connect the device and computer to the same network, then scan the QR code shown by Expo. You can also press `a` for an Android emulator or `i` for an iOS simulator when the required local tooling is installed.
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+### Web
+
+Start the web target with:
+
+```bash
+npm run web
+```
+
+## Type Checking
+
+Run the TypeScript check without emitting files:
+
+```bash
+npx tsc --noEmit
+```
+
+## Development and Contribution
+
+Keep changes focused on the current frontend scope and preserve the existing onboarding behavior. Before opening a pull request:
+
+1. Run `npx tsc --noEmit`.
+2. Run the relevant Expo target and verify the onboarding flow manually.
+3. Review `git diff` and confirm that generated files and secrets are not included.
+4. Use a clear, focused commit message describing the change.
+
+Never commit API keys, passwords, tokens, credentials, or private configuration. Local `.env` files are ignored; use a sanitized `.env.example` only for documenting future configuration names.
+
+## Planned Integrations
+
+Future work may include Supabase-backed profile persistence, authentication, Zustand state management, ML APIs, an AI Coach, and additional fitness and nutrition features. These are planned only and are not part of the current completed frontend.
+
+## References
+
+- [Expo SDK 57 documentation](https://docs.expo.dev/versions/v57.0.0/)
+- [Expo Router documentation](https://docs.expo.dev/router/introduction/)
