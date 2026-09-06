@@ -2,6 +2,58 @@
 
 AlphaFit is a Final Year Project (FYP) frontend for an AI-powered personal fitness and nutrition assistant. The current repository contains the completed welcome and onboarding experience built with React Native and Expo.
 
+## Quickstart (Clone & Run on Windows)
+
+Follow these steps exactly, in order, to get the app running for the first time.
+
+**1. Install prerequisites (one-time only)**
+
+- [Node.js LTS](https://nodejs.org/) — version 22.13 or newer. After installing, confirm in Command Prompt or PowerShell:
+  ```bash
+  node -v
+  npm -v
+  ```
+- [Git for Windows](https://git-scm.com/download/win)
+- **Expo Go** app on your phone — install from the Play Store (Android) or App Store (iPhone). Your phone and laptop must be on the **same Wi-Fi network**.
+- (Optional but recommended) [VS Code](https://code.visualstudio.com/)
+
+**2. Clone the repository**
+
+This repo is public, so no invite or GitHub login is needed. In Command Prompt, PowerShell, or a VS Code terminal:
+
+```bash
+git clone https://github.com/Humna-Naveed/AlphaFit-Frontend.git
+cd AlphaFit-Frontend
+```
+
+**3. Install project dependencies**
+
+```bash
+npm install
+```
+
+This reads `package.json` and downloads all required packages into `node_modules` (this folder is not in Git, so this step is required every time you clone fresh).
+
+**4. Start the app**
+
+```bash
+npx expo start
+```
+
+A QR code will appear in the terminal.
+
+**5. Open it on your phone**
+
+- Open the **Expo Go** app on your phone.
+- Scan the QR code shown in the terminal (Android: use Expo Go's built-in scanner; iPhone: use the regular Camera app, then tap the banner).
+- The app will build and open automatically. First load can take a minute.
+
+**Troubleshooting**
+
+- If the QR scan doesn't connect, make sure phone and laptop are on the same Wi-Fi (not a guest network that isolates devices), or in the terminal press `w` to switch connection mode to "tunnel."
+- If `npm install` fails, delete the `node_modules` folder and `package-lock.json` is fine to keep — just re-run `npm install`.
+- Nothing needs to be installed in Android Studio for this step — Expo Go replaces the emulator entirely for day-to-day testing.
+
 ## Current Status
 
 The current frontend includes:
